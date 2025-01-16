@@ -21,8 +21,14 @@ jobs:
       - name: Initialize Go Modules
         run: go mod tidy
 
-      - name: Debug - List Files
-        run: ls -la  # Check if steGo.go is present
+      - name: Debug - List Files (Cross-Platform)
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            Get-ChildItem -Path .
+          else
+            ls -la
+          fi
 
       - name: Build Executable
         run: |
@@ -33,6 +39,4 @@ jobs:
         with:
           name: steGO_${{ matrix.os }}
           path: steGO_${{ matrix.os }}
-
-
 
