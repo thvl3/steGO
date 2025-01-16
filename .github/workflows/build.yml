@@ -37,11 +37,19 @@ jobs:
           go build -o steGO_windows.exe steGo.go
         shell: pwsh
 
-      - name: Upload Binaries
+      - name: Upload Linux/macOS Binaries
+        if: runner.os != 'Windows'
         uses: actions/upload-artifact@v4
         with:
           name: steGO_${{ matrix.os }}
           path: steGO_${{ matrix.os }}
+
+      - name: Upload Windows Binary
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: steGO_windows.exe
+          path: steGO_windows.exe
 
   release:
     needs: build
@@ -62,7 +70,10 @@ jobs:
           name: steGO v1.0.${{ github.run_number }}
           draft: false
           prerelease: false
-          files: artifacts/**/*
+          files: |
+            artifacts/steGO_macos-latest
+            artifacts/steGO_ubuntu-latest
+            artifacts/steGO_windows.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # Use the new Personal Access Token
 
