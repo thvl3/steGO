@@ -43,11 +43,11 @@ For **Windows**, simply place `steGo.exe` in any folder and run it from **Comman
 ## ⚡ Usage
 ### **1️⃣ Hide a Message in an Image**
 ```sh
-steGo -mode encode -input image.png -output secret.png -message "Hidden text"
+steGo encode image.png secret.png -file texttohide.txt
 ```
 ### **2️⃣ Extract a Hidden Message**
 ```sh
-steGo -mode decode -input secret.png
+steGo decode secret.png
 ```
 
 ---
@@ -69,10 +69,10 @@ GOOS=windows GOARCH=amd64 go build -o steGo.exe steGo.go  # Windows
 Currently, steGO only supports **PNG images** for encoding and decoding.
 
 ### **2️⃣ Can I hide files instead of just text?**
-Right now, steGO supports **text messages**. Future versions may add **file embedding**.
+Right now, steGO supports **text messages or .txt files**.
 
 ### **3️⃣ Is there a graphical user interface (GUI)?**
-No, steGO is a **command-line tool**, but a GUI may be added later.
+No, steGO is a **command-line tool**
 
 ---
 
