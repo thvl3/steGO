@@ -24,32 +24,44 @@ jobs:
       - name: Initialize Go Modules
         run: go mod tidy
 
-      - name: Build Executable (Linux/macOS)
-        if: runner.os != 'Windows'
+      - name: Build Executable (Linux)
+        if: runner.os == 'Linux'
         run: |
-          GOOS=$(go env GOOS) GOARCH=amd64 go build -o steGO_${{ matrix.os }} steGo.go
+          GOOS=linux GOARCH=amd64 go build -o steGo steGo.go
+
+      - name: Build Executable (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          GOOS=darwin GOARCH=amd64 go build -o steGoMac steGo.go
 
       - name: Build Executable (Windows)
         if: runner.os == 'Windows'
         run: |
           $env:GOOS="windows"
           $env:GOARCH="amd64"
-          go build -o steGO_windows.exe steGo.go
+          go build -o steGo.exe steGo.go
         shell: pwsh
 
-      - name: Upload Linux/macOS Binaries
-        if: runner.os != 'Windows'
+      - name: Upload Linux Binary
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
-          name: steGO_${{ matrix.os }}
-          path: steGO_${{ matrix.os }}
+          name: steGo
+          path: steGo
+
+      - name: Upload macOS Binary
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: steGoMac
+          path: steGoMac
 
       - name: Upload Windows Binary
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
-          name: steGO_windows.exe
-          path: steGO_windows.exe
+          name: steGo.exe
+          path: steGo.exe
 
   release:
     needs: build
@@ -73,7 +85,10 @@ jobs:
           name: steGO v1.0.${{ github.run_number }}
           draft: false
           prerelease: false
-          files: artifacts/**/*
+          files: |
+            artifacts/steGo
+            artifacts/steGoMac
+            artifacts/steGo.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # Use the Personal Access Token (PAT)
 
