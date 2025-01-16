@@ -1,5 +1,6 @@
 # steGO - Simple LSB Steganography Tool
 
+### Written by Ethan Hulse
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/thvl3/steGO)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/thvl3/steGO/build.yml?branch=main)
 ![GitHub license](https://img.shields.io/github/license/thvl3/steGO)
@@ -100,5 +101,5 @@ Contributions are welcome! Feel free to submit **issues**, suggest **features**,
 
 ## 📧 Contact
 For any questions, reach out via:
-📬 **Email:** `your-email@example.com`  
+📬 **Email:** `ethanhulse.work@gmail.com`  
 🐙 **GitHub Issues:** [Create an Issue](https://github.com/thvl3/steGO/issues)
