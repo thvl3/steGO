@@ -1,26 +1,31 @@
 package main
 
 import (
-    "bytes"
-    "encoding/binary"
     "fmt"
     "image"
     "image/color"
     "image/png"
     "os"
-    "strings"
 )
 
 // Main function to handle CLI arguments
 func main() {
-    if len(os.Args) < 3 {
-        fmt.Println("Usage:")
-        fmt.Println("  Encode: steGo encode input.png output.png \"Hidden message\"")
-        fmt.Println("  Encode with file: steGo encode input.png output.png -file secret.txt")
-        fmt.Println("  Decode: steGo decode output.png")
-        fmt.Println("  Decode to file: steGo decode output.png -file extracted.txt")
-        return
-    }
+  if len(os.Args) < 3 {
+    fmt.Println("-----------------------------------------------------------")
+    fmt.Println("\nUsage: steGo <mode> <input.png> <output.png> [options]\n")
+    fmt.Println("Encode a message into an image:")
+    fmt.Println("  steGo encode input.png output.png \"Hidden message\"")
+    fmt.Println("  steGo encode input.png output.png -file secret.txt")
+    fmt.Println("\nDecode a message from an image:")
+    fmt.Println("  steGo decode input.png")
+    fmt.Println("  steGo decode input.png -file extracted.txt")
+    fmt.Println("\nNotes:")
+    fmt.Println("  - The output file is required when encoding.")
+    fmt.Println("  - The '-file' option allows hiding/extracting text files.")
+    fmt.Println("\nExample:\n  steGo encode input.png output.png -file secret.txt \n  steGo decode output.png -file extracted.txt")
+    fmt.Println("-----------------------------------------------------------")
+    return
+}
 
     mode := os.Args[1] // "encode" or "decode"
     input := os.Args[2] // Input PNG
@@ -149,7 +154,7 @@ func hideMessage(img image.Image, messageBytes []byte) *image.RGBA {
             // Modify LSB of red channel to store message bits
             if msgIndex < len(messageBytes) {
                 bit := (messageBytes[msgIndex] >> (7 - bitIndex)) & 1
-                r = (r & 0xFE) | bit
+                r = uint32((uint8(r) & 0xFE) | bit) // Fix: Explicit cast to uint8
 
                 bitIndex++
                 if bitIndex == 8 {
