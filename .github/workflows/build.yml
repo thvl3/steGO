@@ -21,18 +21,9 @@ jobs:
       - name: Initialize Go Modules
         run: go mod tidy
 
-      - name: Debug - List Files (Cross-Platform)
-        shell: bash
-        run: |
-          if [[ "$RUNNER_OS" == "Windows" ]]; then
-            Get-ChildItem -Path .
-          else
-            ls -la
-          fi
-
       - name: Build Executable
         run: |
-          go build -o steGO_${{ matrix.os }} steGo.go  # Corrected filename
+          go build -o steGO_${{ matrix.os }} steGo.go  # Uses correct filename
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v4
