@@ -16,7 +16,7 @@
 
 ---
 
-## 📥 Download & Install
+## 📥 Download
 You can download precompiled binaries from the **[Releases](https://github.com/thvl3/steGO/releases)** page.
 
 | Platform | Binary Name | Download Link |
@@ -25,7 +25,20 @@ You can download precompiled binaries from the **[Releases](https://github.com/t
 | 🍏 **macOS** | `steGoMac` | [Download](https://github.com/thvl3/steGO/releases/latest) |
 | 🖥 **Windows** | `steGo.exe` | [Download](https://github.com/thvl3/steGO/releases/latest) |
 
-### **Installation Steps**
+## ⚡ Usage
+### **1️⃣ Hide a Message in an Image**
+```sh
+steGo encode image.png secret.png -file texttohide.txt
+```
+### **2️⃣ Extract a Hidden Message**
+```sh
+steGo decode secret.png
+```
+
+---
+
+
+### **Installation Steps (optional)**
 1. Download the correct binary for your OS.
 2. Make it executable (for Linux/macOS):
    ```sh
@@ -40,17 +53,6 @@ For **Windows**, simply place `steGo.exe` in any folder and run it from **Comman
 
 ---
 
-## ⚡ Usage
-### **1️⃣ Hide a Message in an Image**
-```sh
-steGo encode image.png secret.png -file texttohide.txt
-```
-### **2️⃣ Extract a Hidden Message**
-```sh
-steGo decode secret.png
-```
-
----
 
 ## 🛠 Building from Source
 If you prefer to build `steGO` yourself, ensure you have **Go installed** and run:
