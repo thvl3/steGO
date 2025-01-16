@@ -63,6 +63,9 @@ jobs:
         with:
           path: artifacts
 
+      - name: List Downloaded Files (Debugging)
+        run: ls -R artifacts
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -70,10 +73,7 @@ jobs:
           name: steGO v1.0.${{ github.run_number }}
           draft: false
           prerelease: false
-          files: |
-            artifacts/steGO_macos-latest
-            artifacts/steGO_ubuntu-latest
-            artifacts/steGO_windows.exe
+          files: artifacts/**/*
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # Use the new Personal Access Token
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # Use the Personal Access Token (PAT)
 
