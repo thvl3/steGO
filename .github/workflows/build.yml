@@ -3,7 +3,7 @@ name: Build and Release steGO
 on:
   push:
     branches:
-      - main  # Only release when pushing to main
+      - main  # Only create a release when pushing to main
 
 jobs:
   build:
@@ -34,7 +34,7 @@ jobs:
         run: |
           $env:GOOS="windows"
           $env:GOARCH="amd64"
-          go build -o steGO_windows steGo.go
+          go build -o steGO_windows.exe steGo.go
         shell: pwsh
 
       - name: Upload Binaries
@@ -64,5 +64,5 @@ jobs:
           prerelease: false
           files: artifacts/**/*
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # Use the new Personal Access Token
 
