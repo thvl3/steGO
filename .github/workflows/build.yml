@@ -46,21 +46,21 @@ jobs:
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
-          name: steGo
+          name: steGo-linux
           path: steGo
 
       - name: Upload macOS Binary
         if: runner.os == 'macOS'
         uses: actions/upload-artifact@v4
         with:
-          name: steGoMac
+          name: steGo-mac
           path: steGoMac
 
       - name: Upload Windows Binary
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
-          name: steGo.exe
+          name: steGo-windows
           path: steGo.exe
 
   release:
@@ -70,10 +70,23 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Download Binaries
+      - name: Download Linux Binary
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          name: steGo-linux
+          path: artifacts/
+
+      - name: Download macOS Binary
+        uses: actions/download-artifact@v4
+        with:
+          name: steGo-mac
+          path: artifacts/
+
+      - name: Download Windows Binary
+        uses: actions/download-artifact@v4
+        with:
+          name: steGo-windows
+          path: artifacts/
 
       - name: List Downloaded Files (Debugging)
         run: ls -R artifacts
