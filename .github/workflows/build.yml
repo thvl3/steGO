@@ -3,7 +3,7 @@ name: Build and Release steGO
 on:
   push:
     branches:
-      - main  # Trigger the release workflow only on the main branch
+      - main  # Only release when pushing to main
 
 jobs:
   build:
@@ -24,9 +24,18 @@ jobs:
       - name: Initialize Go Modules
         run: go mod tidy
 
-      - name: Build Executable
+      - name: Build Executable (Linux/macOS)
+        if: runner.os != 'Windows'
         run: |
           GOOS=$(go env GOOS) GOARCH=amd64 go build -o steGO_${{ matrix.os }} steGo.go
+
+      - name: Build Executable (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          $env:GOOS="windows"
+          $env:GOARCH="amd64"
+          go build -o steGO_windows steGo.go
+        shell: pwsh
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v4
@@ -35,7 +44,7 @@ jobs:
           path: steGO_${{ matrix.os }}
 
   release:
-    needs: build  # Run only after builds complete successfully
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
