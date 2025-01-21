@@ -5,7 +5,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/thvl3/steGO/build.yml?branch=main)
 ![GitHub license](https://img.shields.io/github/license/thvl3/steGO)
 
-**steGO** is a lightweight steganography tool written in **Go** that allows you to **hide and extract secret messages** inside PNG images using **Least Significant Bit (LSB) encoding**.
+**steGO** is a lightweight CLI steganography tool written in **Go** that allows you to **hide and extract secret messages** inside PNG images using **Least Significant Bit (LSB) encoding**.
 
 ## 🚀 Features
 ✅ **Embed messages into PNG images** using LSB.  
