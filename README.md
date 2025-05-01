@@ -43,7 +43,15 @@ A powerful command-line tool for hiding messages in images using steganography. 
 
 ### From Release
 
-Download the latest release from the [releases page](https://github.com/thule/steGo/releases) and install the appropriate binary for your platform.
+Download the latest release from the [releases page](https://github.com/thule/steGo/releases) and install the appropriate binary for your platform:
+
+| Platform | Binary Name |
+|----------|------------|
+| Linux    | `steGo-linux-amd64` |
+| macOS    | `steGo-darwin-amd64` |
+| Windows  | `steGo-windows-amd64.exe` |
+
+After downloading, rename the binary to `steGo` (or `steGo.exe` on Windows) and install it in your PATH.
 
 ## Usage
 
