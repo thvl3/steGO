@@ -1,4 +1,4 @@
-name: Build and Release steGO
+name: Build and Release steGo
 
 on:
   push:
@@ -27,41 +27,41 @@ jobs:
       - name: Build Executable (Linux)
         if: runner.os == 'Linux'
         run: |
-          GOOS=linux GOARCH=amd64 go build -o steGo steGo.go
+          GOOS=linux GOARCH=amd64 go build -o steGo-linux-amd64 ./cmd/steGo
 
       - name: Build Executable (macOS)
         if: runner.os == 'macOS'
         run: |
-          GOOS=darwin GOARCH=amd64 go build -o steGoMac steGo.go
+          GOOS=darwin GOARCH=amd64 go build -o steGo-darwin-amd64 ./cmd/steGo
 
       - name: Build Executable (Windows)
         if: runner.os == 'Windows'
         run: |
           $env:GOOS="windows"
           $env:GOARCH="amd64"
-          go build -o steGo.exe steGo.go
+          go build -o steGo-windows-amd64.exe ./cmd/steGo
         shell: pwsh
 
       - name: Upload Linux Binary
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
-          name: steGo-linux
-          path: steGo
+          name: steGo-linux-amd64
+          path: steGo-linux-amd64
 
       - name: Upload macOS Binary
         if: runner.os == 'macOS'
         uses: actions/upload-artifact@v4
         with:
-          name: steGo-mac
-          path: steGoMac
+          name: steGo-darwin-amd64
+          path: steGo-darwin-amd64
 
       - name: Upload Windows Binary
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
-          name: steGo-windows
-          path: steGo.exe
+          name: steGo-windows-amd64.exe
+          path: steGo-windows-amd64.exe
 
   release:
     needs: build
@@ -73,19 +73,19 @@ jobs:
       - name: Download Linux Binary
         uses: actions/download-artifact@v4
         with:
-          name: steGo-linux
+          name: steGo-linux-amd64
           path: artifacts/
 
       - name: Download macOS Binary
         uses: actions/download-artifact@v4
         with:
-          name: steGo-mac
+          name: steGo-darwin-amd64
           path: artifacts/
 
       - name: Download Windows Binary
         uses: actions/download-artifact@v4
         with:
-          name: steGo-windows
+          name: steGo-windows-amd64.exe
           path: artifacts/
 
       - name: List Downloaded Files (Debugging)
@@ -95,13 +95,13 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.${{ github.run_number }}
-          name: steGO v1.0.${{ github.run_number }}
+          name: steGo v1.0.${{ github.run_number }}
           draft: false
           prerelease: false
           files: |
-            artifacts/steGo
-            artifacts/steGoMac
-            artifacts/steGo.exe
+            artifacts/steGo-linux-amd64
+            artifacts/steGo-darwin-amd64
+            artifacts/steGo-windows-amd64.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # Use the Personal Access Token (PAT)
 

@@ -1,107 +1,187 @@
-# steGO - Simple LSB Steganography Tool
+# steGo
 
-### Written by Ethan Hulse
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/thvl3/steGO)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/thvl3/steGO/build.yml?branch=main)
-![GitHub license](https://img.shields.io/github/license/thvl3/steGO)
+[![Go Report Card](https://goreportcard.com/badge/github.com/thule/steGo)](https://goreportcard.com/report/github.com/thule/steGo)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/thule/steGo)](https://github.com/thule/steGo/releases)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/thule/steGo/build.yml?branch=main)](https://github.com/thule/steGo/actions/workflows/build.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/thule/steGo.svg)](https://pkg.go.dev/github.com/thule/steGo)
 
-**steGO** is a lightweight CLI steganography tool written in **Go** that allows you to **hide and extract secret messages** inside PNG images using **Least Significant Bit (LSB) encoding**.
+A powerful command-line tool for hiding messages in images using steganography. steGo supports encoding and decoding messages in PNG images using the LSB (Least Significant Bit) method.
 
-## 🚀 Features
-✅ **Embed messages into PNG images** using LSB.  
-✅ **Extract hidden messages** from PNG images.  
-✅ **Cross-platform support** (Linux, macOS, Windows).  
-✅ **Lightweight & Fast** – written in Go, no dependencies required.  
-✅ **Command-line interface** for easy use.  
+## Features
 
----
+- **Message Encoding**: Hide messages in PNG images
+- **Message Decoding**: Extract hidden messages from images
+- **File Support**: Encode/Decode text files
+- **Configuration**: Customizable through config files and environment variables
+- **Shell Integration**: Shell completion for bash, zsh, fish, and PowerShell
+- **Cross-Platform**: Works on Linux, macOS, and Windows
 
-## 📥 Download
-You can download precompiled binaries from the **[Releases](https://github.com/thvl3/steGO/releases)** page.
+## Installation
 
-| Platform | Binary Name | Download Link |
-|----------|------------|---------------|
-| 🐧 **Linux** | `steGo` | [Download](https://github.com/thvl3/steGO/releases/latest) |
-| 🍏 **macOS** | `steGoMac` | [Download](https://github.com/thvl3/steGO/releases/latest) |
-| 🖥 **Windows** | `steGo.exe` | [Download](https://github.com/thvl3/steGO/releases/latest) |
+### From Source
 
-## ⚡ Usage
-### **1️⃣ Hide a Message in an Image**
-```sh
-steGo encode image.png secret.png -file texttohide.txt
-```
-### **2️⃣ Extract a Hidden Message**
-```sh
-steGo decode secret.png
-```
-
----
-
-
-### **Installation Steps (optional)**
-1. Download the correct binary for your OS.
-2. Make it executable (for Linux/macOS):
-   ```sh
-   chmod +x steGo  # or steGoMac on macOS
-   ```
-3. Move it to a directory in your `$PATH`:
-   ```sh
-   sudo mv steGo /usr/local/bin/  # or steGoMac on macOS
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/thule/steGo.git
+   cd steGo
    ```
 
-For **Windows**, simply place `steGo.exe` in any folder and run it from **Command Prompt or PowerShell**.
+2. Build the project:
+   ```bash
+   go build -o steGo ./cmd/steGo
+   ```
 
----
+3. Install the binary:
+   ```bash
+   # Linux/macOS
+   sudo install steGo /usr/local/bin
 
+   # Windows
+   # Copy steGo.exe to a directory in your PATH
+   ```
 
-## 🛠 Building from Source
-If you prefer to build `steGO` yourself, ensure you have **Go installed** and run:
-```sh
-git clone https://github.com/thvl3/steGO.git
-cd steGO
-go build -o steGo steGo.go  # Linux
-GOOS=darwin GOARCH=amd64 go build -o steGoMac steGo.go  # macOS
-GOOS=windows GOARCH=amd64 go build -o steGo.exe steGo.go  # Windows
+### From Release
+
+Download the latest release from the [releases page](https://github.com/thule/steGo/releases) and install the appropriate binary for your platform:
+
+| Platform | Binary Name |
+|----------|------------|
+| Linux    | `steGo-linux-amd64` |
+| macOS    | `steGo-darwin-amd64` |
+| Windows  | `steGo-windows-amd64.exe` |
+
+After downloading, rename the binary to `steGo` (or `steGo.exe` on Windows) and install it in your PATH.
+
+## Usage
+
+### Basic Usage
+
+```bash
+# Encode a message into an image
+steGo encode -i input.png -o output.png -m "Secret message"
+
+# Encode a message from a file
+steGo encode -i input.png -o output.png -f message.txt
+
+# Decode a message from an image
+steGo decode -i output.png
+
+# Decode a message to a file
+steGo decode -i output.png -o message.txt
 ```
 
----
+### Shell Completion
 
-## ❓ FAQ
-### **1️⃣ What image formats does steGO support?**
-Currently, steGO only supports **PNG images** for encoding and decoding.
+```bash
+# Bash
+source <(steGo completion bash)
 
-### **2️⃣ Can I hide files instead of just text?**
-Right now, steGO supports **text messages or .txt files**.
+# Zsh
+steGo completion zsh > "${fpath[1]}/_steGo"
 
-### **3️⃣ Is there a graphical user interface (GUI)?**
-No, steGO is a **command-line tool**
+# Fish
+steGo completion fish | source
 
----
+# PowerShell
+steGo completion powershell | Out-String | Invoke-Expression
+```
 
-## 🎯 Planned Features
-🔹 **Support for additional image formats (JPEG, BMP, etc.)**  
-🔹 **Encryption for added security**  
-🔹 **Support for hiding entire files inside images**  
-🔹 **More advanced steganography techniques (e.g., DCT-based hiding)**  
+### Configuration
 
----
+steGo can be configured using a YAML configuration file. By default, it looks for `steGo.yaml` in:
+- Linux/macOS: `$HOME/.config/steGo.yaml`
+- Windows: `%APPDATA%\steGo\steGo.yaml`
 
-## 📜 License
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
+Example configuration:
+```yaml
+verbose: true
+default:
+  input: "input.png"
+  output: "output.png"
+```
 
----
+You can also use environment variables:
+```bash
+export STEGO_VERBOSE=true
+export STEGO_DEFAULT_INPUT="input.png"
+export STEGO_DEFAULT_OUTPUT="output.png"
+```
 
-## ❤️ Contributing
-Contributions are welcome! Feel free to submit **issues**, suggest **features**, or open **pull requests**.
+## Command Reference
 
-### **Steps to Contribute**
-1. **Fork** the repo and create a new branch.
-2. Implement your changes.
-3. Submit a **Pull Request** for review.
+### Global Flags
 
----
+- `--config string`: config file (default is $HOME/.config/steGo.yaml)
+- `-v, --verbose`: verbose output
+- `--version`: version for steGo
 
-## 📧 Contact
-For any questions, reach out via:
-📬 **Email:** `ethanhulse.work@gmail.com`  
-🐙 **GitHub Issues:** [Create an Issue](https://github.com/thvl3/steGO/issues)
+### Encode Command
+
+```bash
+steGo encode [flags]
+```
+
+Flags:
+- `-f, --file string`: file containing message to encode
+- `-h, --help`: help for encode
+- `-i, --input string`: input image file (required)
+- `-m, --message string`: message to encode
+- `-o, --output string`: output image file (required)
+
+### Decode Command
+
+```bash
+steGo decode [flags]
+```
+
+Flags:
+- `-h, --help`: help for decode
+- `-i, --input string`: input image file (required)
+- `-o, --output string`: output file (optional)
+
+## Development
+
+### Prerequisites
+
+- Go 1.21 or later
+- Git
+
+### Building
+
+```bash
+# Build for current platform
+go build -o steGo ./cmd/steGo
+
+# Cross-compile for all platforms
+GOOS=linux GOARCH=amd64 go build -o steGo-linux-amd64 ./cmd/steGo
+GOOS=darwin GOARCH=amd64 go build -o steGo-darwin-amd64 ./cmd/steGo
+GOOS=windows GOARCH=amd64 go build -o steGo-windows-amd64.exe ./cmd/steGo
+```
+
+### Testing
+
+```bash
+# Run tests
+go test ./...
+
+# Run tests with coverage
+go test -cover ./...
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [Cobra](https://github.com/spf13/cobra) - CLI framework
+- [Viper](https://github.com/spf13/viper) - Configuration management
