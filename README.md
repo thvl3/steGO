@@ -1,10 +1,10 @@
 # steGo
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/thule/steGo)](https://goreportcard.com/report/github.com/thule/steGo)
+[![Go Report Card](https://goreportcard.com/badge/github.com/thvl3/steGo)](https://goreportcard.com/report/github.com/thvl3/steGo)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/thule/steGo)](https://github.com/thule/steGo/releases)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/thule/steGo/build.yml?branch=main)](https://github.com/thule/steGo/actions/workflows/build.yml)
-[![Go Reference](https://pkg.go.dev/badge/github.com/thule/steGo.svg)](https://pkg.go.dev/github.com/thule/steGo)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/thvl3/steGo)](https://github.com/thvl3/steGo/releases)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/thvl3/steGo/build.yml?branch=main)](https://github.com/thvl3/steGo/actions/workflows/build.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/thvl3/steGo.svg)](https://pkg.go.dev/github.com/thvl3/steGo)
 
 A powerful command-line tool for hiding messages in images using steganography. steGo supports encoding and decoding messages in PNG images using the LSB (Least Significant Bit) method.
 
@@ -23,7 +23,7 @@ A powerful command-line tool for hiding messages in images using steganography. 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/thule/steGo.git
+   git clone https://github.com/thvl3/steGo.git
    cd steGo
    ```
 
@@ -37,13 +37,28 @@ A powerful command-line tool for hiding messages in images using steganography. 
    # Linux/macOS
    sudo install steGo /usr/local/bin
 
-   # Windows
-   # Copy steGo.exe to a directory in your PATH
+   # Windows (PowerShell)
+   # Create a directory for your executables if you don't have one, e.g., $HOME\bin
+   # mkdir $HOME\bin -ErrorAction SilentlyContinue
+   # Copy steGo.exe to that directory:
+   Copy-Item .\steGo.exe -Destination "$HOME\bin\steGo.exe"
+   # Ensure that the directory (e.g., $HOME\bin) is in your PATH.
+   # You can check by running: $env:Path -split ';'
+   # To add it temporarily for the current session: $env:Path += ";$HOME\bin"
+   # For a permanent change, search for "Edit the system environment variables" in Windows.
    ```
+
+### Windows Execution Notes
+
+Sometimes, antivirus software on Windows might incorrectly flag `steGo.exe` as malicious. If you encounter this, or face permission issues when trying to run the program, consider the following:
+
+*   **Antivirus Exception**: Add an exception for `steGo.exe` in your antivirus software. The steps for this vary depending on your antivirus program.
+*   **Run as Administrator (Use with Caution)**: You can try running PowerShell as an administrator. Right-click on the PowerShell icon and select "Run as administrator". However, be cautious when running any program with elevated privileges.
+*   **Verify the Source**: Ensure you have downloaded `steGo` from the official GitHub releases page to minimize risks.
 
 ### From Release
 
-Download the latest release from the [releases page](https://github.com/thule/steGo/releases) and install the appropriate binary for your platform:
+Download the latest release from the [releases page](https://github.com/thvl3/steGo/releases) and install the appropriate binary for your platform:
 
 | Platform | Binary Name |
 |----------|------------|
